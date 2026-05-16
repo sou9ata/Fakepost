@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FB Post Maker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ===== EDITOR PANEL ===== -->
+<div class="editor-panel">
+  <h2 class="editor-title">✏️ FB Post Editor</h2>
+
+  <!-- Profile Picture -->
+  <div class="field-group">
+    <label>Profile Picture</label>
+    <input type="file" id="pfp-input" accept="image/*" />
+    <div class="pfp-preview-wrap">
+      <img id="pfp-preview" src="https://ui-avatars.com/api/?name=AniX.TV&background=444&color=fff&size=128" alt="pfp" />
+    </div>
+  </div>
+
+  <!-- Page Name -->
+  <div class="field-group">
+    <label>Page Name</label>
+    <input type="text" id="input-name" value="AniX.TV" placeholder="Page Name" />
+  </div>
+
+  <!-- Verified Badge -->
+  <div class="field-group toggle-row">
+    <label>Verified Badge</label>
+    <label class="toggle">
+      <input type="checkbox" id="toggle-verified" checked />
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <!-- Date & Time -->
+  <div class="field-group">
+    <label>Date / Time</label>
+    <input type="text" id="input-datetime" value="Today at 7:00 PM" placeholder="Today at 7:00 PM" />
+  </div>
+
+  <!-- Visibility -->
+  <div class="field-group">
+    <label>Post Visibility</label>
+    <select id="input-visibility">
+      <option value="globe">🌐 Public</option>
+      <option value="friends">👥 Friends</option>
+      <option value="lock">🔒 Only Me</option>
+    </select>
+  </div>
+
+  <!-- Reaction Emojis -->
+  <div class="field-group">
+    <label>Reaction Emojis (pick up to 3)</label>
+    <div class="emoji-picker" id="emoji-picker">
+      <span class="ep" data-emoji="👍" title="Like">👍</span>
+      <span class="ep" data-emoji="❤️" title="Love">❤️</span>
+      <span class="ep" data-emoji="😂" title="Haha">😂</span>
+      <span class="ep" data-emoji="😮" title="Wow">😮</span>
+      <span class="ep" data-emoji="😢" title="Sad">😢</span>
+      <span class="ep" data-emoji="😡" title="Angry">😡</span>
+      <span class="ep" data-emoji="🥰" title="Care">🥰</span>
+    </div>
+    <p class="hint">Selected: <span id="selected-emojis-label">👍 ❤️ 😂</span></p>
+  </div>
+
+  <!-- Reaction Count -->
+  <div class="field-group">
+    <label>Reaction Count</label>
+    <input type="text" id="input-reactions" value="10K" placeholder="10K" />
+  </div>
+
+  <!-- Comments -->
+  <div class="field-group">
+    <label>Comments Count</label>
+    <input type="text" id="input-comments" value="5K" placeholder="5K" />
+  </div>
+
+  <!-- Shares -->
+  <div class="field-group">
+    <label>Shares Count</label>
+    <input type="text" id="input-shares" value="1K" placeholder="1K" />
+  </div>
+
+  <!-- Background Color -->
+  <div class="field-group">
+    <label>Post Background</label>
+    <div class="bg-options">
+      <button class="bg-btn active" data-bg="bg-dim" title="Dim">
+        <span class="bg-swatch" style="background:#1a1a1a;"></span>
+        <span>Dim</span>
+      </button>
+      <button class="bg-btn" data-bg="bg-black" title="Black">
+        <span class="bg-swatch" style="background:#000;"></span>
+        <span>Black</span>
+      </button>
+      <button class="bg-btn" data-bg="bg-light" title="Light">
+        <span class="bg-swatch" style="background:#f0f2f5; border:1px solid #555;"></span>
+        <span>Light</span>
+      </button>
+      <button class="bg-btn" data-bg="bg-transparent" title="Transparent">
+        <span class="bg-swatch checker"></span>
+        <span>Clear</span>
+      </button>
+    </div>
+  </div>
+
+  <button class="dl-btn" id="download-btn">⬇️ Download Post Image</button>
+</div>
+
+<!-- ===== PREVIEW PANEL ===== -->
+<div class="preview-panel">
+  <p class="preview-label">LIVE PREVIEW</p>
+  <div class="fb-post" id="fb-post">
+
+    <!-- Post Header -->
+    <div class="post-header">
+      <img class="post-pfp" id="post-pfp" src="https://ui-avatars.com/api/?name=AniX.TV&background=444&color=fff&size=128" alt="pfp" />
+      <div class="post-meta">
+        <div class="post-name-row">
+          <span class="post-name" id="post-name">AniX.TV</span>
+          <span class="verified-badge" id="verified-badge">
+            <svg viewBox="0 0 24 24" fill="#1877f2" width="18" height="18">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5l-4-4 1.41-1.41L10 13.67l6.59-6.59L18 8.5l-8 8z"/>
+            </svg>
+          </span>
+        </div>
+        <div class="post-datetime" id="post-datetime">
+          <span id="post-time">Today at 7:00 PM</span>
+          <span class="dot">·</span>
+          <span class="visibility-icon" id="visibility-icon">🌐</span>
+        </div>
+      </div>
+      <div class="post-dots">···</div>
+    </div>
+
+    <!-- Post Content Area (empty) -->
+    <div class="post-content-area"></div>
+
+    <!-- Reaction Bar -->
+    <div class="post-reaction-bar">
+      <div class="reaction-emojis-row">
+        <div class="reaction-bubbles" id="reaction-bubbles">
+          <span class="rbubble">👍</span>
+          <span class="rbubble">❤️</span>
+          <span class="rbubble">😂</span>
+        </div>
+        <span class="reaction-count" id="reaction-count">10K</span>
+      </div>
+      <div class="reaction-stats">
+        <span id="post-comments">5K comments</span>
+        <span id="post-shares">1K shares</span>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="post-divider"></div>
+
+    <!-- Action Buttons -->
+    <div class="post-actions">
+      <div class="action-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#b0b3b8" stroke-width="1.8" width="20" height="20">
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          <rect x="3" y="11" width="18" height="11" rx="2"/>
+        </svg>
+        <span>Like</span>
+      </div>
+      <div class="action-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#b0b3b8" stroke-width="1.8" width="20" height="20">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+        <span>Comment</span>
+      </div>
+      <div class="action-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#b0b3b8" stroke-width="1.8" width="20" height="20">
+          <polyline points="15 17 20 12 15 7"/>
+          <path d="M4 18v-2a4 4 0 0 1 4-4h12"/>
+        </svg>
+        <span>Share</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

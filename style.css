@@ -1,0 +1,410 @@
+@import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #18191a;
+  --surface: #242526;
+  --surface2: #3a3b3c;
+  --text: #e4e6eb;
+  --text2: #b0b3b8;
+  --accent: #1877f2;
+  --border: #3e4042;
+  --editor-bg: #1c1e21;
+}
+
+body {
+  background: var(--bg);
+  font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 0;
+}
+
+/* ===== EDITOR ===== */
+.editor-panel {
+  width: 340px;
+  min-height: 100vh;
+  background: var(--editor-bg);
+  border-right: 1px solid var(--border);
+  padding: 28px 22px 40px;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+.editor-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 24px;
+  letter-spacing: 0.3px;
+}
+
+.field-group {
+  margin-bottom: 18px;
+}
+
+.field-group label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 7px;
+}
+
+.field-group input[type="text"],
+.field-group select {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 9px 12px;
+  font-size: 0.92rem;
+  outline: none;
+  transition: border 0.2s;
+}
+.field-group input[type="text"]:focus,
+.field-group select:focus {
+  border-color: var(--accent);
+}
+
+.field-group input[type="file"] {
+  background: none;
+  color: var(--text2);
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.pfp-preview-wrap {
+  margin-top: 8px;
+}
+.pfp-preview-wrap img {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--accent);
+}
+
+/* Toggle */
+.toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+}
+.toggle-row label:first-child {
+  margin-bottom: 0;
+}
+.toggle {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+}
+.toggle input { opacity: 0; width: 0; height: 0; }
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: var(--surface2);
+  border-radius: 24px;
+  transition: 0.3s;
+}
+.slider::before {
+  content: "";
+  position: absolute;
+  height: 18px; width: 18px;
+  left: 3px; bottom: 3px;
+  background: white;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+.toggle input:checked + .slider { background: var(--accent); }
+.toggle input:checked + .slider::before { transform: translateX(20px); }
+
+/* Emoji Picker */
+.emoji-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.ep {
+  font-size: 1.5rem;
+  cursor: pointer;
+  border-radius: 8px;
+  padding: 4px 6px;
+  background: var(--surface);
+  border: 2px solid transparent;
+  transition: border 0.18s, transform 0.15s;
+  user-select: none;
+}
+.ep:hover { transform: scale(1.15); }
+.ep.selected { border-color: var(--accent); background: #1877f220; }
+
+.hint {
+  font-size: 0.78rem;
+  color: var(--text2);
+}
+
+/* Download Button */
+.dl-btn {
+  margin-top: 10px;
+  width: 100%;
+  padding: 12px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.3px;
+  transition: background 0.2s, transform 0.15s;
+}
+.dl-btn:hover { background: #1565c0; transform: translateY(-1px); }
+.dl-btn:active { transform: translateY(0); }
+
+/* ===== PREVIEW ===== */
+.preview-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 24px;
+  min-height: 100vh;
+}
+
+.preview-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--text2);
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+/* ===== FB POST ===== */
+.fb-post {
+  width: 500px;
+  max-width: 100%;
+  background: var(--surface);
+  border-radius: 10px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.45);
+  overflow: hidden;
+}
+
+/* Transparent mode — whole card bg gone */
+.fb-post.mode-transparent {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.post-header {
+  display: flex;
+  align-items: flex-start;
+  padding: 14px 16px 8px;
+  gap: 10px;
+}
+
+.post-pfp {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.post-meta {
+  flex: 1;
+}
+
+.post-name-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.post-name {
+  font-size: 0.97rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.verified-badge svg {
+  display: block;
+}
+.verified-badge.hidden { display: none; }
+
+.post-datetime {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.78rem;
+  color: var(--text2);
+  margin-top: 1px;
+}
+
+.dot { font-size: 0.9rem; }
+
+.post-dots {
+  color: var(--text2);
+  font-size: 1.3rem;
+  letter-spacing: 1px;
+  padding: 2px 4px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+/* Empty content area */
+.post-content-area {
+  width: 100%;
+  height: 420px;
+  background: #1a1a1a;
+  transition: background 0.3s;
+}
+
+/* BG presets */
+.post-content-area.bg-black       { background: #000000; }
+.post-content-area.bg-dim         { background: #1a1a1a; }
+.post-content-area.bg-light       { background: #f0f2f5; }
+.post-content-area.bg-transparent { background: transparent; }
+
+/* When whole post is transparent, header/bar/actions also transparent */
+.fb-post.mode-transparent .post-header,
+.fb-post.mode-transparent .post-reaction-bar,
+.fb-post.mode-transparent .post-actions {
+  background: transparent;
+}
+
+/* Reaction Bar */
+.post-reaction-bar {
+  padding: 8px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.reaction-emojis-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.reaction-bubbles {
+  display: flex;
+  gap: 0;
+}
+
+.rbubble {
+  font-size: 1.1rem;
+  background: var(--surface2);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: -4px;
+  border: 2px solid var(--surface);
+  font-size: 0.85rem;
+  line-height: 1;
+}
+.rbubble:first-child { margin-left: 0; }
+
+.reaction-count {
+  font-size: 0.92rem;
+  color: var(--text2);
+}
+
+.reaction-stats {
+  display: flex;
+  gap: 14px;
+  font-size: 0.87rem;
+  color: var(--text2);
+}
+.reaction-stats span:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.post-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 0 16px;
+}
+
+.post-actions {
+  display: flex;
+  padding: 4px 8px;
+}
+
+.action-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 10px 4px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--text2);
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: background 0.15s;
+}
+.action-btn:hover { background: var(--surface2); }
+
+/* Responsive */
+@media (max-width: 900px) {
+  body { flex-direction: column; }
+  .editor-panel { width: 100%; min-height: auto; border-right: none; border-bottom: 1px solid var(--border); }
+  .preview-panel { padding: 24px 10px; }
+  .fb-post { width: 100%; }
+}
+
+/* ===== BG OPTIONS ===== */
+.bg-options {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.bg-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  background: var(--surface);
+  border: 2px solid transparent;
+  border-radius: 10px;
+  padding: 8px 10px;
+  cursor: pointer;
+  color: var(--text2);
+  font-size: 0.75rem;
+  font-weight: 600;
+  transition: border 0.18s, transform 0.15s;
+  flex: 1;
+  min-width: 60px;
+}
+.bg-btn:hover { transform: translateY(-2px); border-color: var(--surface2); }
+.bg-btn.active { border-color: var(--accent); color: var(--text); }
+
+.bg-swatch {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  display: block;
+}
+
+.bg-swatch.checker {
+  background: repeating-conic-gradient(#555 0% 25%, #333 0% 50%) 0 0 / 12px 12px;
+  border: 1px solid #555;
+}
